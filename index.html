@@ -84,6 +84,7 @@
   .session-date{ font-family: "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12px; color: var(--ink-soft); }
 
   .lesson{ margin-bottom: 9px; font-size: 13.5px; color: var(--ink); }
+  .lesson a{ color: var(--teal); font-weight: 700; text-decoration: underline; }
   .lesson .lesson-label{ font-weight: 700; color: var(--navy); margin-right: 5px; }
 
   .deliverable{
@@ -149,6 +150,8 @@
   .modal-lesson .lesson-top{ display:flex; justify-content:space-between; align-items:center; gap: 10px; margin-bottom: 4px; }
   .modal-lesson .lesson-label{ font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--navy); }
   .modal-lesson .lesson-text{ margin: 6px 0 0; transition: opacity .3s ease; }
+  .modal-lesson .lesson-text a{ color: var(--teal); font-weight: 700; text-decoration: underline; }
+  .modal-lesson .lesson-text a:hover{ color: var(--amber-deep); }
 
   .modal-lesson.done{ background: var(--teal-soft); border-color: var(--teal); }
   .modal-lesson.done .lesson-text{ text-decoration: line-through; text-decoration-color: var(--lock-text); opacity: .65; }
@@ -299,7 +302,7 @@ const weeks = [
     n: 1, title: "Fundación de la empresa",
     date: "2026-08-31",
     lessons: [
-      "Lluvia de ideas: cada integrante propone 2 ideas de negocio dentro de un eje (Impresión 3D, Cortadora Láser, Construcción o Electrónica y Programación); el equipo elige un enfoque concreto (ej. mascotas, hogar, deporte), fija su eje definitivo y asigna roles: Diseño/Fabricación, Producto, Desarrollo Web, Marca, Vocero Comercial.",
+      "Lluvia de ideas en <a href=\"https://miro.com\" target=\"_blank\" rel=\"noopener\">Miro</a> (cada equipo inicia sesión y crea su propio tablero): cada integrante propone 2 ideas de negocio dentro de un eje (Impresión 3D, Cortadora Láser, Construcción o Electrónica y Programación); el equipo elige un enfoque concreto (ej. mascotas, hogar, deporte), fija su eje definitivo y asigna roles: Diseño/Fabricación, Producto, Desarrollo Web, Marca, Vocero Comercial.",
       "Naming: generación de 5 opciones de nombre de empresa, votación interna y 2 bocetos a mano de logo para elegir uno. Registro en el Modelo de Negocio (Slides): diapositiva 1 con el nombre elegido y diapositiva 2 con el cliente objetivo (edad, intereses, necesidad)."
     ],
     deliverable: "Slides con diapositivas 1-2 completas (Nombre del Producto + Cliente Objetivo)."
