@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesiones ROBOTEC — Mi Empresa, Mi Producto</title>
+<style>
+  :root{
+    --paper: #F4F6F8;
+    --paper-line: #E1E7EC;
+    --ink: #16233B;
+    --ink-soft: #4A5670;
+    --navy: #1B3B63;
+    --navy-2: #24507F;
+    --amber: #E0972C;
+    --amber-deep: #B9740F;
+    --teal: #2F8F52;
+    --teal-soft: #DEEEE1;
+    --amber-soft: #FBEBD2;
+    --card: #FFFFFF;
+    --line: #D7DEE6;
+    --lock-bg: #EBEDEF;
+    --lock-line: #D2D7DC;
+    --lock-text: #838C97;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:
+      linear-gradient(var(--paper-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-line) 1px, transparent 1px),
+      var(--paper);
+    background-size: 28px 28px, 28px 28px, auto;
+    color:var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{ max-width:960px; margin:0 auto; padding: 0 20px 90px; }
+
+  /* ---------- HERO ---------- */
+  header.hero{ padding: 56px 0 30px; border-bottom: 3px solid var(--ink); margin-bottom: 34px; }
+  .kicker{ font-family: Georgia, "Times New Roman", serif; font-style: italic; color: var(--teal); font-size: 15px; margin: 0 0 10px; }
+  h1.title{ font-size: clamp(30px, 5.5vw, 48px); line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 14px; color: var(--navy); font-weight: 800; }
+  .hero-meta{ display:flex; flex-wrap:wrap; gap: 10px 26px; font-size: 14.5px; color: var(--ink-soft); margin-bottom: 22px; }
+  .hero-meta strong{ color: var(--ink); }
+
+  .progress-bar{
+    background: var(--card); border: 1px solid var(--line); border-radius: 4px;
+    padding: 14px 18px; display:flex; align-items:center; gap: 16px; flex-wrap: wrap;
+  }
+  .progress-track{ flex: 1 1 220px; height: 8px; background: var(--lock-bg); border-radius: 4px; overflow:hidden; }
+  .progress-fill{ height: 100%; background: var(--teal); border-radius: 4px; transition: width .3s ease; }
+  .progress-label{ font-size: 13.5px; color: var(--ink-soft); font-family: "SFMono-Regular", Menlo, Consolas, monospace; white-space: nowrap; }
+
+  /* ---------- WEEK GROUP ---------- */
+  .week-group{ margin-bottom: 30px; }
+  .week-heading{
+    display:flex; align-items:baseline; gap: 12px; margin-bottom: 14px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--line);
+  }
+  .week-heading .wk-num{
+    font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 12.5px; font-weight: 700; color: var(--teal);
+    background: var(--teal-soft); padding: 3px 9px; border-radius: 3px;
+  }
+  .week-heading .wk-title{ font-size: 15px; color: var(--ink); font-weight: 600; }
+
+  .sessions-row{ display:block; }
+
+  /* ---------- SESSION CARD (unlocked) ---------- */
+  .session{
+    background: var(--card); border: 1px solid var(--line); border-radius: 4px;
+    padding: 18px 20px; transition: box-shadow .18s ease, border-color .18s ease;
+  }
+  .session:hover{ border-color: var(--teal); box-shadow: 0 4px 18px rgba(22,35,59,0.08); }
+
+  .session-head{ display:flex; justify-content:space-between; align-items:baseline; gap: 10px; margin-bottom: 10px; }
+  .session-num{ font-family: "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .session-date{ font-family: "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12px; color: var(--ink-soft); }
+
+  .lesson{ margin-bottom: 9px; font-size: 13.5px; color: var(--ink); }
+  .lesson .lesson-label{ font-weight: 700; color: var(--navy); margin-right: 5px; }
+
+  .deliverable{
+    margin-top: 12px; background: var(--amber-soft); border-radius: 4px; padding: 9px 12px; font-size: 12.5px; color: var(--navy);
+  }
+  .deliverable .d-label{ display:block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--amber-deep); margin-bottom: 3px; }
+
+  .today-badge{
+    display:inline-block; margin-left: 8px; font-size: 10.5px; font-weight: 700;
+    color: var(--teal); background: var(--teal-soft); padding: 2px 8px; border-radius: 3px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+
+  /* ---------- SESSION CARD (locked) ---------- */
+  .session.locked{
+    background: var(--lock-bg); border: 1px dashed var(--lock-line);
+    display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
+    min-height: 128px;
+  }
+  .session.locked:hover{ box-shadow:none; border-color: var(--lock-line); }
+  .lock-icon{ width: 22px; height: 22px; margin-bottom: 8px; opacity: .55; }
+  .locked .session-num{ color: var(--lock-text); }
+  .lock-msg{ font-size: 13px; color: var(--lock-text); }
+  .lock-msg strong{ color: var(--ink-soft); font-family: "SFMono-Regular", Menlo, Consolas, monospace; font-weight: 700; }
+
+  /* ---------- CLICK HINT ---------- */
+  .session{ cursor: pointer; position: relative; }
+  .click-hint{
+    margin-top: 10px; font-size: 11.5px; color: var(--teal); font-weight: 700;
+    display:flex; align-items:center; gap: 4px;
+  }
+  .click-hint svg{ width: 12px; height: 12px; }
+
+  /* ---------- MODAL ---------- */
+  .modal-overlay{
+    display:none; position: fixed; inset: 0; background: rgba(15,23,38,0.72);
+    z-index: 100; align-items:flex-start; justify-content:center; padding: 40px 20px; overflow-y:auto;
+  }
+  .modal-overlay.open{ display:flex; }
+  .modal-box{
+    background: var(--card); border-radius: 10px; max-width: 620px; width: 100%;
+    padding: 30px 34px 30px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    animation: modalPopIn .28s cubic-bezier(.2,.8,.3,1.15);
+  }
+  @keyframes modalPopIn{
+    from{ opacity: 0; transform: translateY(10px) scale(.98); }
+    to{ opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .modal-close{
+    position: absolute; top: 16px; right: 18px; background: none; border: none; cursor: pointer;
+    color: var(--ink-soft); font-size: 22px; line-height: 1; padding: 4px;
+  }
+  .modal-close:hover{ color: var(--ink); }
+  .modal-week{ font-size: 12.5px; color: var(--teal); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .modal-title{ font-size: 23px; font-weight: 800; color: var(--navy); margin: 0 0 4px; }
+  .modal-date{ font-family: "SFMono-Regular", Menlo, Consolas, monospace; font-size: 13px; color: var(--ink-soft); margin-bottom: 20px; }
+
+  .modal-lesson{
+    margin-bottom: 14px; font-size: 14.5px; color: var(--ink); padding: 16px 18px;
+    border-radius: 8px; border: 1.5px solid var(--line); background: var(--card);
+    transition: border-color .35s ease, background .35s ease, box-shadow .35s ease, transform .35s ease;
+  }
+  .modal-lesson .lesson-top{ display:flex; justify-content:space-between; align-items:center; gap: 10px; margin-bottom: 4px; }
+  .modal-lesson .lesson-label{ font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--navy); }
+  .modal-lesson .lesson-text{ margin: 6px 0 0; transition: opacity .3s ease; }
+
+  .modal-lesson.done{ background: var(--teal-soft); border-color: var(--teal); }
+  .modal-lesson.done .lesson-text{ text-decoration: line-through; text-decoration-color: var(--lock-text); opacity: .65; }
+  .modal-lesson.done .lesson-label{ color: var(--teal); }
+
+  .modal-lesson.active{
+    background: linear-gradient(180deg, #FFFDF8 0%, var(--amber-soft) 100%);
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px rgba(224,151,44,0.18), 0 8px 24px rgba(224,151,44,0.15);
+    transform: scale(1.015);
+    animation: activatePop .45s cubic-bezier(.2,.8,.3,1.2);
+  }
+  @keyframes activatePop{
+    0%{ transform: scale(.97); box-shadow: 0 0 0 0 rgba(224,151,44,0); }
+    60%{ transform: scale(1.03); }
+    100%{ transform: scale(1.015); }
+  }
+  .modal-lesson.active .lesson-text{ font-weight: 600; }
+
+  .simple-clock{
+    font-family: "SFMono-Regular", Menlo, Consolas, monospace; font-weight: 700; font-size: 15px; color: var(--ink-soft);
+  }
+  .done-clock{
+    font-family: "SFMono-Regular", Menlo, Consolas, monospace; font-weight: 700; font-size: 14px; color: var(--teal);
+    display:flex; align-items:center; gap: 5px; animation: checkPop .35s ease;
+  }
+  @keyframes checkPop{ from{ transform: scale(.5); opacity: 0; } to{ transform: scale(1); opacity: 1; } }
+
+  /* ---------- TIMER RING ---------- */
+  .ring-wrap{
+    position: relative; width: 132px; height: 132px; margin: 4px 0 2px;
+  }
+  .ring-svg{ width: 100%; height: 100%; transform: rotate(-90deg); display:block; }
+  .ring-track{ fill:none; stroke: rgba(224,151,44,0.18); stroke-width: 9; }
+  .ring-progress{
+    fill:none; stroke: var(--amber); stroke-width: 9; stroke-linecap: round;
+    stroke-dasharray: 345.6; transition: stroke-dashoffset 1s linear, stroke .4s ease;
+  }
+  .ring-number{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family: "SFMono-Regular", Menlo, Consolas, monospace; font-weight: 800; font-size: 30px;
+    color: var(--amber-deep); letter-spacing: -0.02em;
+  }
+  .ring-wrap.warning .ring-progress{ stroke: #D6412C; }
+  .ring-wrap.warning .ring-number{ color: #D6412C; }
+  .ring-wrap.warning{ animation: ringPulse 1s ease-in-out infinite; }
+  @keyframes ringPulse{
+    0%, 100%{ transform: scale(1); }
+    50%{ transform: scale(1.06); }
+  }
+
+  .lesson-active-row{ display:flex; align-items:center; gap: 18px; }
+  .lesson-active-row .lesson-copy{ flex: 1; }
+
+  .session-complete-banner{
+    display:none; align-items:center; gap: 10px; background: var(--teal-soft); border: 1.5px solid var(--teal);
+    border-radius: 8px; padding: 14px 18px; margin: 4px 0 16px; font-weight: 700; color: var(--teal);
+    animation: checkPop .4s ease;
+  }
+  .session-complete-banner.show{ display:flex; }
+
+  .timer-controls{
+    display:flex; align-items:center; gap: 12px; margin: 14px 0 6px; flex-wrap: wrap;
+  }
+  .timer-controls button{
+    font-size: 14px; font-weight: 700; border: none; border-radius: 6px; padding: 11px 20px; cursor: pointer;
+    transition: background .2s ease, transform .15s ease;
+  }
+  .timer-controls button:active{ transform: scale(.96); }
+  #timer-start-btn{ background: var(--amber); color: #fff; }
+  #timer-start-btn:hover{ background: var(--amber-deep); }
+  #timer-pause-btn{ background: var(--lock-bg); color: var(--ink); }
+  #timer-pause-btn:hover{ background: var(--line); }
+  #timer-reset-btn{ background: none; color: var(--ink-soft); text-decoration: underline; padding: 11px 4px; font-size: 13px; }
+  .timer-status{ font-size: 12.5px; color: var(--ink-soft); font-style: italic; }
+
+  .modal-deliverable{ margin-top: 16px; background: var(--amber-soft); border-radius: 4px; padding: 12px 14px; font-size: 13.5px; color: var(--navy); }
+  .modal-deliverable .d-label{ display:block; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--amber-deep); margin-bottom: 4px; }
+  .modal-link{
+    margin-top: 14px; display:flex; align-items:center; gap: 8px; background: var(--teal-soft);
+    border-radius: 4px; padding: 12px 14px; text-decoration:none;
+  }
+  .modal-link span{ font-size: 13.5px; font-weight: 700; color: var(--teal); }
+  .modal-link.disabled{ background: var(--lock-bg); cursor: default; }
+  .modal-link.disabled span{ color: var(--lock-text); }
+
+  @media (max-width: 560px){
+    .wrap{ padding: 0 14px 70px; }
+    header.hero{ padding: 40px 0 24px; }
+    .session{ padding: 16px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker">Proyecto Feria Robótica · Tercer Trimestre</p>
+    <h1 class="title">Sesión a sesión</h1>
+    <div class="hero-meta">
+      <span><strong>III Trimestre 2026</strong></span>
+      <span>31 de agosto → 11 de noviembre</span>
+      <span>10 sesiones · 2 lecciones de ~30 min c/u</span>
+    </div>
+    <div class="progress-bar">
+      <span class="progress-label" id="progress-label">0 / 10 sesiones desbloqueadas</span>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+  </header>
+
+  <div id="content"></div>
+
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close" aria-label="Cerrar">&times;</button>
+    <p class="modal-week" id="modal-week"></p>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <p class="modal-date" id="modal-date"></p>
+    <div id="modal-lessons"></div>
+    <div class="session-complete-banner" id="session-complete-banner">
+      <span>🎉</span><span>¡Sesión completa! Las dos lecciones terminaron.</span>
+    </div>
+    <div class="timer-controls">
+      <button id="timer-start-btn">Iniciar Lección 1</button>
+      <button id="timer-pause-btn" style="display:none">Pausar</button>
+      <button id="timer-reset-btn">Reiniciar</button>
+      <span class="timer-status" id="timer-status"></span>
+    </div>
+    <div id="modal-deliverable-slot"></div>
+    <a href="#" target="_blank" rel="noopener" class="modal-link" id="modal-link">
+      <span id="modal-link-text">Abrir plantilla del Modelo de Negocio</span>
+    </a>
+  </div>
+</div>
+
+<svg style="display:none">
+  <symbol id="lock-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="11" width="18" height="11" rx="2"></rect>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+  </symbol>
+</svg>
+
+<script>
+const weeks = [
+  {
+    n: 1, title: "Fundación de la empresa",
+    date: "2026-08-31",
+    lessons: [
+      "Lluvia de ideas: cada integrante propone 2 ideas de negocio dentro de un eje (Impresión 3D, Cortadora Láser, Construcción o Electrónica y Programación); el equipo elige un enfoque concreto (ej. mascotas, hogar, deporte), fija su eje definitivo y asigna roles: Diseño/Fabricación, Producto, Desarrollo Web, Marca, Vocero Comercial.",
+      "Naming: generación de 5 opciones de nombre de empresa, votación interna y 2 bocetos a mano de logo para elegir uno. Registro en el Modelo de Negocio (Slides): diapositiva 1 con el nombre elegido y diapositiva 2 con el cliente objetivo (edad, intereses, necesidad)."
+    ],
+    deliverable: "Slides con diapositivas 1-2 completas (Nombre del Producto + Cliente Objetivo)."
+  },
+  {
+    n: 2, title: "Boceto e inicio del diseño digital",
+    date: "2026-09-07",
+    lessons: [
+      "Boceto a mano de los 5 productos del catálogo, con vista frontal y medidas aproximadas en centímetros; votación interna de los 5 bocetos definitivos y ajustes según las observaciones del equipo.",
+      "Modelado del primer producto en Tinkercad u Onshape, o vectorizado en Falcon Design (según el eje), replicando las medidas del boceto; carga de la foto de los 5 bocetos en el espacio 'Boceto a mano' de la Bitácora Técnica."
+    ],
+    deliverable: "Slides con diapositiva 3 (Propuesta de Valor) + Bitácora Técnica con foto de los 5 bocetos."
+  },
+  {
+    n: 3, title: "Diseño digital e inicio de fabricación",
+    date: "2026-09-14",
+    lessons: [
+      "Modelado de los productos 2 a 5 en la herramienta digital correspondiente al eje; revisión cruzada entre equipos del mismo eje, anotando un ajuste concreto a corregir.",
+      "Inicio de fabricación del primer producto: impresión 3D, corte en la cortadora láser, armado con materiales/Knex, o montaje del primer circuito en protoboard, según el eje. Captura del diseño digital final cargada en el espacio 'Diseño 3D / Circuito' de la Bitácora Técnica."
+    ],
+    deliverable: "Slides con diapositiva 4 (Características Clave) + Bitácora Técnica con captura del diseño digital."
+  },
+  {
+    n: 4, title: "Fabricación y programación",
+    date: "2026-09-21",
+    lessons: [
+      "Fabricación de los productos 2 a 5 del catálogo.",
+      "Programación del circuito con apoyo de un prompt de IA que genere el código base (eje de Electrónica), o acabado y pulido de piezas (Impresión 3D, Cortadora Láser, Construcción); primera prueba de funcionamiento de los 5 productos, con registro escrito de qué falta ajustar."
+    ],
+    deliverable: "Slides con diapositiva 9 (Análisis de Competencia)."
+  },
+  {
+    n: 5, title: "Continuación de fabricación",
+    date: "2026-09-28",
+    lessons: [
+      "Corrección de piezas o circuitos que fallaron en la prueba anterior; ajuste fino de programación (tiempos, sensores) o de ensamblaje, según el eje.",
+      "Segunda prueba de funcionamiento de los 5 productos, con un compañero externo al equipo probando cada uno; foto del avance físico cargada en el espacio 'Físico / Fabricado' de la Bitácora Técnica."
+    ],
+    deliverable: "Slides con diapositiva 8 (Costo de Producción) + Bitácora Técnica con foto del avance físico."
+  },
+  {
+    n: 6, title: "Ensamblaje y pruebas",
+    date: "2026-10-05",
+    lessons: [
+      "Ensamblaje final de los 5 productos con acabados: pintura, pulido o empaque simple; prueba de funcionamiento final y ajustes de último momento.",
+      "Control de calidad: revisión uno por uno de los 5 productos contra 3 criterios (funciona, se ve terminado, es seguro de manipular); sesión de fotos de los productos terminados para el sitio web y la Bitácora."
+    ],
+    deliverable: "Slides con diapositiva 7 (Precio del Producto)."
+  },
+  {
+    n: 7, title: "Identidad de marca e inicio del sitio web",
+    date: "2026-10-12",
+    lessons: [
+      "Definición del logo final (una sola versión), la paleta de colores de marca (2 a 3 colores) y 3 opciones de eslogan hasta elegir la versión final.",
+      "Creación del archivo HTML del sitio con 4 secciones (inicio, sobre la empresa, catálogo, contacto) y aplicación de los estilos CSS con los colores y tipografía de marca."
+    ],
+    deliverable: "Slides con diapositivas 5 y 10 (Estrategia de Promoción + Eslogan)."
+  },
+  {
+    n: 8, title: "Finalización del sitio web",
+    date: "2026-10-19",
+    lessons: [
+      "Carga de las 5 fichas de producto al sitio (foto, nombre, descripción y precio de cada uno) y programación en JS de un elemento interactivo (menú, galería o formulario de contacto).",
+      "Revisión del sitio desde computadora y celular, corrigiendo lo que no funcione; publicación (GitHub Pages, Netlify u otro) y prueba del enlace final."
+    ],
+    deliverable: "Slides con diapositiva 6 (Canal de Venta) + enlace del sitio web publicado."
+  },
+  {
+    n: 9, title: "Pitch comercial y diseño del stand",
+    date: "2026-10-26",
+    lessons: [
+      "Redacción del guion del pitch: apertura, problema que resuelve el catálogo, presentación de los 5 productos y cierre con llamado a la acción; primer ensayo cronometrado (máximo 3 minutos) con retroalimentación del equipo.",
+      "Boceto del stand: ubicación de los 5 productos, del logo y de los materiales de decoración; revisión final de las 11 diapositivas del Modelo de Negocio, verificando que ninguna quede incompleta."
+    ],
+    deliverable: "Slides con diapositiva 11 (Próximos Pasos) + Modelo de Negocio completo (11 diapositivas)."
+  },
+  {
+    n: 10, title: "Feria ROBOTEC",
+    date: "2026-11-11",
+    lessons: [
+      "Montaje físico del stand con la decoración y los 5 productos colocados; ensayo final del pitch comercial completo, ya en el espacio real del stand.",
+      "Presentación en vivo del pitch comercial ante el comité evaluador, con los 5 productos disponibles para mostrar; premiación al mejor proyecto por eje y al mejor proyecto general."
+    ],
+    deliverable: "Presentación en vivo, evaluada con las rúbricas de Producto Técnico, Marca/Sitio Web y Pitch Comercial."
+  }
+];
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+const today = new Date();
+today.setHours(0,0,0,0);
+
+function fmtDate(iso){
+  const d = new Date(iso + "T00:00:00");
+  const opts = { day: "numeric", month: "short" };
+  return d.toLocaleDateString("es-CR", opts).replace(".", "").toUpperCase();
+}
+
+function isSameDay(a, b){
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+
+const contentEl = document.getElementById("content");
+let unlockedCount = 0;
+let totalCount = 0;
+const sessionRegistry = {};
+
+weeks.forEach((week) => {
+  totalCount++;
+  const weekGroup = document.createElement("div");
+  weekGroup.className = "week-group";
+
+  const heading = document.createElement("div");
+  heading.className = "week-heading";
+  heading.innerHTML = `<span class="wk-num">SEMANA ${week.n}</span><span class="wk-title">${week.title}</span>`;
+  weekGroup.appendChild(heading);
+
+  const row = document.createElement("div");
+  row.className = "sessions-row";
+
+  const sessionDate = new Date(week.date + "T00:00:00");
+  const unlocked = sessionDate.getTime() <= today.getTime();
+  const isToday = isSameDay(sessionDate, today);
+  if (unlocked) unlockedCount++;
+
+  const sessionId = week.n;
+  sessionRegistry[sessionId] = { weekTitle: week.title, weekN: week.n, session: week };
+
+  const card = document.createElement("div");
+
+  if (unlocked) {
+    card.className = "session";
+    card.dataset.sessionId = sessionId;
+    let html = `
+      <div class="session-head">
+        <span class="session-num">SESIÓN ${sessionId}</span>
+        <span class="session-date">${fmtDate(week.date)}${isToday ? '<span class="today-badge">Hoy</span>' : ""}</span>
+      </div>
+    `;
+    week.lessons.forEach((l, i) => {
+      html += `<p class="lesson"><span class="lesson-label">Lección ${i+1}:</span>${l}</p>`;
+    });
+    if (week.deliverable) {
+      html += `<div class="deliverable"><span class="d-label">Entrega en Classroom</span>${week.deliverable}</div>`;
+    }
+    html += `<div class="click-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>Ver detalle completo</div>`;
+    card.innerHTML = html;
+    card.addEventListener("click", () => openModal(sessionId));
+  } else {
+    card.className = "session locked";
+    card.innerHTML = `
+      <svg class="lock-icon"><use href="#lock-svg"></use></svg>
+      <span class="session-num">SESIÓN ${sessionId}</span>
+      <p class="lock-msg">Se desbloquea el <strong>${fmtDate(week.date)}</strong></p>
+    `;
+  }
+
+  row.appendChild(card);
+  weekGroup.appendChild(row);
+  contentEl.appendChild(weekGroup);
+});
+
+document.getElementById("progress-label").textContent = `${unlockedCount} / ${totalCount} sesiones desbloqueadas`;
+document.getElementById("progress-fill").style.width = `${(unlockedCount / totalCount) * 100}%`;
+
+/* ---------- MODAL ---------- */
+const overlay = document.getElementById("modal-overlay");
+const modalWeek = document.getElementById("modal-week");
+const modalTitle = document.getElementById("modal-title");
+const modalDate = document.getElementById("modal-date");
+const modalLessons = document.getElementById("modal-lessons");
+const modalDeliverableSlot = document.getElementById("modal-deliverable-slot");
+const modalLink = document.getElementById("modal-link");
+const modalLinkText = document.getElementById("modal-link-text");
+
+const DEFAULT_MODEL_LINK = "https://canva.link/wdoarncwvwtqs1h";
+
+function getModelLink(){
+  return DEFAULT_MODEL_LINK;
+}
+
+const LESSON_SECONDS = 30 * 60; // ~30 min por lección
+
+let timerState = {
+  lessonIndex: 0,      // 0 = Lección 1, 1 = Lección 2
+  remaining: LESSON_SECONDS,
+  running: false,
+  started: false,
+  intervalId: null,
+  totalLessons: 2,
+};
+
+const RING_CIRCUMFERENCE = 345.6;
+
+function beep(freq = 880, duration = 0.35){
+  try{
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.16, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+    osc.start();
+    osc.stop(ctx.currentTime + duration);
+  } catch(e) { /* audio not available, ignore */ }
+}
+
+function chimeDone(){
+  beep(880, 0.3);
+  setTimeout(() => beep(1175, 0.4), 220);
+}
+
+function fmtClock(totalSeconds){
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  return `${m}:${s < 10 ? "0" : ""}${s}`;
+}
+
+function ringMarkup(remaining){
+  const pct = Math.max(0, Math.min(1, remaining / LESSON_SECONDS));
+  const offset = RING_CIRCUMFERENCE * (1 - pct);
+  const warning = pct <= 0.2;
+  return `
+    <div class="ring-wrap ${warning ? "warning" : ""}">
+      <svg viewBox="0 0 120 120" class="ring-svg">
+        <circle class="ring-track" cx="60" cy="60" r="55"></circle>
+        <circle class="ring-progress" cx="60" cy="60" r="55" style="stroke-dashoffset:${offset}"></circle>
+      </svg>
+      <div class="ring-number">${fmtClock(remaining)}</div>
+    </div>`;
+}
+
+function renderLessonStates(){
+  const lessonEls = modalLessons.querySelectorAll(".modal-lesson");
+  lessonEls.forEach((el, i) => {
+    const slot = el.querySelector(".clock-slot");
+    const wasActive = el.classList.contains("active");
+    el.classList.remove("active", "done");
+
+    if (i < timerState.lessonIndex) {
+      el.classList.add("done");
+      slot.innerHTML = `<span class="done-clock">✓ Completada</span>`;
+    } else if (i === timerState.lessonIndex && timerState.started) {
+      el.classList.add("active");
+      slot.innerHTML = ringMarkup(timerState.remaining);
+      if (!wasActive) {
+        el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    } else {
+      slot.innerHTML = `<span class="simple-clock">${fmtClock(LESSON_SECONDS)}</span>`;
+    }
+  });
+
+  const banner = document.getElementById("session-complete-banner");
+  banner.classList.toggle("show", timerState.lessonIndex >= timerState.totalLessons);
+}
+
+function tick(){
+  if (timerState.remaining > 0) {
+    timerState.remaining--;
+    renderLessonStates();
+  } else {
+    clearInterval(timerState.intervalId);
+    timerState.running = false;
+    if (timerState.lessonIndex < timerState.totalLessons - 1) {
+      beep(880, 0.3);
+      timerState.lessonIndex++;
+      timerState.remaining = LESSON_SECONDS;
+      renderLessonStates();
+      document.getElementById("timer-status").textContent = `Lección ${timerState.lessonIndex + 1} en curso.`;
+      startTimer();
+    } else {
+      chimeDone();
+      timerState.lessonIndex = timerState.totalLessons;
+      renderLessonStates();
+      document.getElementById("timer-status").textContent = "";
+      document.getElementById("timer-start-btn").style.display = "none";
+      document.getElementById("timer-pause-btn").style.display = "none";
+    }
+  }
+}
+
+function startTimer(){
+  if (timerState.running) return;
+  timerState.running = true;
+  timerState.started = true;
+  timerState.intervalId = setInterval(tick, 1000);
+  document.getElementById("timer-start-btn").style.display = "none";
+  document.getElementById("timer-pause-btn").style.display = "inline-block";
+  document.getElementById("timer-status").textContent = `Lección ${timerState.lessonIndex + 1} en curso.`;
+  renderLessonStates();
+}
+
+function pauseTimer(){
+  timerState.running = false;
+  clearInterval(timerState.intervalId);
+  document.getElementById("timer-start-btn").textContent = "Reanudar";
+  document.getElementById("timer-start-btn").style.display = "inline-block";
+  document.getElementById("timer-pause-btn").style.display = "none";
+  document.getElementById("timer-status").textContent = "En pausa.";
+}
+
+function resetTimer(){
+  clearInterval(timerState.intervalId);
+  timerState = {
+    lessonIndex: 0, remaining: LESSON_SECONDS, running: false, started: false,
+    intervalId: null, totalLessons: timerState.totalLessons,
+  };
+  document.getElementById("timer-start-btn").textContent = "Iniciar Lección 1";
+  document.getElementById("timer-start-btn").style.display = "inline-block";
+  document.getElementById("timer-pause-btn").style.display = "none";
+  document.getElementById("timer-status").textContent = "";
+  renderLessonStates();
+}
+
+document.getElementById("timer-start-btn").addEventListener("click", startTimer);
+document.getElementById("timer-pause-btn").addEventListener("click", pauseTimer);
+document.getElementById("timer-reset-btn").addEventListener("click", resetTimer);
+
+function openModal(sessionId){
+  const data = sessionRegistry[sessionId];
+  if (!data) return;
+  const s = data.session;
+
+  modalWeek.textContent = `Semana ${data.weekN} · ${data.weekTitle}`;
+  modalTitle.textContent = `Sesión ${sessionId}`;
+  modalDate.textContent = fmtDate(s.date);
+
+  let lessonsHtml = "";
+  s.lessons.forEach((l, i) => {
+    lessonsHtml += `
+      <div class="modal-lesson">
+        <div class="lesson-active-row">
+          <div class="clock-slot"><span class="simple-clock">${fmtClock(LESSON_SECONDS)}</span></div>
+          <div class="lesson-copy">
+            <div class="lesson-top"><span class="lesson-label">Lección ${i+1} (~${Math.round(LESSON_SECONDS/60)} min)</span></div>
+            <p class="lesson-text">${l}</p>
+          </div>
+        </div>
+      </div>`;
+  });
+  modalLessons.innerHTML = lessonsHtml;
+
+  timerState.totalLessons = s.lessons.length;
+  resetTimer();
+
+  if (s.deliverable) {
+    modalDeliverableSlot.innerHTML = `<div class="modal-deliverable"><span class="d-label">Entrega en Classroom</span>${s.deliverable}</div>`;
+  } else {
+    modalDeliverableSlot.innerHTML = "";
+  }
+
+  const link = getModelLink();
+  if (link) {
+    modalLink.classList.remove("disabled");
+    modalLink.href = link;
+    modalLinkText.textContent = "Abrir plantilla del Modelo de Negocio ↗";
+  } else {
+    modalLink.classList.add("disabled");
+    modalLink.removeAttribute("href");
+    modalLinkText.textContent = "Agrega el enlace del Modelo de Negocio arriba";
+  }
+
+  overlay.classList.add("open");
+}
+
+function closeModal(){
+  overlay.classList.remove("open");
+  clearInterval(timerState.intervalId);
+  timerState.running = false;
+}
+
+document.getElementById("modal-close").addEventListener("click", closeModal);
+overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+</script>
+
+</body>
+</html>
