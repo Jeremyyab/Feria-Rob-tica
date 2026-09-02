@@ -44,6 +44,9 @@
 
   /* ---------- HERO ---------- */
   header.hero{ padding: 56px 0 30px; border-bottom: 3px solid var(--ink); margin-bottom: 34px; }
+  .logo-row{ display:flex; align-items:center; gap: 22px; margin-bottom: 18px; flex-wrap: wrap; }
+  .logo-sd{ height: 48px; width: auto; }
+  .logo-tk{ height: 36px; width: auto; }
   .kicker{ font-family: Georgia, "Times New Roman", serif; font-style: italic; color: var(--teal); font-size: 15px; margin: 0 0 10px; }
   h1.title{ font-size: clamp(30px, 5.5vw, 48px); line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 14px; color: var(--navy); font-weight: 800; }
   .hero-meta{ display:flex; flex-wrap:wrap; gap: 10px 26px; font-size: 14.5px; color: var(--ink-soft); margin-bottom: 22px; }
@@ -241,6 +244,8 @@
   @media (max-width: 560px){
     .wrap{ padding: 0 14px 70px; }
     header.hero{ padding: 40px 0 24px; }
+    .logo-sd{ height: 36px; }
+    .logo-tk{ height: 28px; }
     .session{ padding: 16px 16px; }
   }
 </style>
@@ -249,6 +254,10 @@
 <div class="wrap">
 
   <header class="hero">
+    <div class="logo-row">
+      <img src="logosd.png" alt="San Diego Bilingual High School" class="logo-sd">
+      <img src="tk.svg" alt="Tecnikids" class="logo-tk">
+    </div>
     <p class="kicker">Proyecto Feria Robótica · Tercer Trimestre</p>
     <h1 class="title">Sesión a sesión</h1>
     <div class="hero-meta">
