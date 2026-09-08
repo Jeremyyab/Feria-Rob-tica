@@ -8,20 +8,21 @@
   :root{
     --paper: #F4F6F8;
     --paper-line: #E1E7EC;
-    --ink: #16233B;
-    --ink-soft: #4A5670;
-    --navy: #1B3B63;
-    --navy-2: #24507F;
-    --amber: #E0972C;
-    --amber-deep: #B9740F;
-    --teal: #2F8F52;
-    --teal-soft: #DEEEE1;
-    --amber-soft: #FBEBD2;
+    --ink: #0C244F;
+    --ink-soft: #47597D;
+    --navy: #0C244F;
+    --navy-2: #163A73;
+    --amber: #FFC200;
+    --amber-deep: #B98900;
+    --teal: #6FA614;
+    --teal-soft: #EBF5D8;
+    --amber-soft: #FFF2CC;
     --card: #FFFFFF;
     --line: #D7DEE6;
     --lock-bg: #EBEDEF;
     --lock-line: #D2D7DC;
     --lock-text: #838C97;
+    --red: #DC0001;
   }
 
   *{box-sizing:border-box;}
@@ -93,7 +94,15 @@
   .deliverable{
     margin-top: 12px; background: var(--amber-soft); border-radius: 4px; padding: 9px 12px; font-size: 12.5px; color: var(--navy);
   }
-  .deliverable .d-label{ display:block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--amber-deep); margin-bottom: 3px; }
+  .deliverable .d-label{ display:block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--amber-deep); margin-bottom: 5px; }
+  .deliverable-list{ margin: 0; padding-left: 18px; }
+  .deliverable-list li{ margin-bottom: 4px; }
+  .deliverable-list li:last-child{ margin-bottom: 0; }
+
+  .async-block{
+    margin-top: 10px; background: #EDE7F6; border: 1px solid #C9B8ED; border-radius: 4px; padding: 9px 12px; font-size: 12.5px; color: var(--navy);
+  }
+  .async-block .a-label{ display:block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: #6B3FA0; margin-bottom: 3px; }
 
   .today-badge{
     display:inline-block; margin-left: 8px; font-size: 10.5px; font-weight: 700;
@@ -198,8 +207,8 @@
     font-family: "SFMono-Regular", Menlo, Consolas, monospace; font-weight: 800; font-size: 30px;
     color: var(--amber-deep); letter-spacing: -0.02em;
   }
-  .ring-wrap.warning .ring-progress{ stroke: #D6412C; }
-  .ring-wrap.warning .ring-number{ color: #D6412C; }
+  .ring-wrap.warning .ring-progress{ stroke: var(--red); }
+  .ring-wrap.warning .ring-number{ color: var(--red); }
   .ring-wrap.warning{ animation: ringPulse 1s ease-in-out infinite; }
   @keyframes ringPulse{
     0%, 100%{ transform: scale(1); }
@@ -232,7 +241,12 @@
   .timer-status{ font-size: 12.5px; color: var(--ink-soft); font-style: italic; }
 
   .modal-deliverable{ margin-top: 16px; background: var(--amber-soft); border-radius: 4px; padding: 12px 14px; font-size: 13.5px; color: var(--navy); }
-  .modal-deliverable .d-label{ display:block; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--amber-deep); margin-bottom: 4px; }
+  .modal-deliverable .d-label{ display:block; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--amber-deep); margin-bottom: 6px; }
+  .modal-deliverable .deliverable-list{ margin: 0; padding-left: 20px; }
+  .modal-deliverable .deliverable-list li{ margin-bottom: 6px; }
+  .modal-deliverable .deliverable-list li:last-child{ margin-bottom: 0; }
+  .modal-async{ margin-top: 12px; background: #EDE7F6; border: 1px solid #C9B8ED; border-radius: 4px; padding: 12px 14px; font-size: 13.5px; color: var(--navy); }
+  .modal-async .a-label{ display:block; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: #6B3FA0; margin-bottom: 4px; }
   .modal-link{
     margin-top: 14px; display:flex; align-items:center; gap: 8px; background: var(--teal-soft);
     border-radius: 4px; padding: 12px 14px; text-decoration:none;
@@ -241,12 +255,39 @@
   .modal-link.disabled{ background: var(--lock-bg); cursor: default; }
   .modal-link.disabled span{ color: var(--lock-text); }
 
+  /* ---------- INCENTIVES ---------- */
+  .incentives{ margin-top: 44px; }
+  .incentive-card{
+    background: var(--card); border: 1px solid var(--line); border-radius: 4px;
+    padding: 20px 24px; margin-bottom: 20px;
+  }
+  .incentive-card h3{ margin: 0 0 4px; font-size: 15.5px; color: var(--navy); }
+  .incentive-note{ font-size: 12px; color: var(--ink-soft); font-style: italic; margin: 0 0 14px; }
+  .incentive-table{ width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 12px; }
+  .incentive-table th{
+    text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--ink-soft); border-bottom: 1px solid var(--line); padding: 6px 8px;
+  }
+  .incentive-table td{ padding: 8px; border-bottom: 1px solid var(--paper-line); color: var(--ink); }
+  .incentive-table tr:last-child td{ border-bottom: none; }
+  .incentive-condition{
+    font-size: 12.5px; color: var(--ink-soft); background: var(--paper); border-radius: 4px;
+    padding: 10px 12px; margin: 0;
+  }
+  .incentive-list{ margin: 0 0 12px; padding-left: 20px; font-size: 13.5px; color: var(--ink); }
+  .incentive-list li{ margin-bottom: 6px; }
+  .incentive-pending{
+    font-size: 12.5px; color: var(--amber-deep); background: var(--amber-soft); border-radius: 4px;
+    padding: 10px 12px; margin: 0; font-weight: 600;
+  }
+
   @media (max-width: 560px){
     .wrap{ padding: 0 14px 70px; }
     header.hero{ padding: 40px 0 24px; }
     .logo-sd{ height: 36px; }
     .logo-tk{ height: 28px; }
     .session{ padding: 16px 16px; }
+    .incentive-table{ font-size: 12px; }
   }
 </style>
 </head>
@@ -272,6 +313,39 @@
   </header>
 
   <div id="content"></div>
+
+  <section class="incentives">
+    <div class="week-heading" style="border-bottom:1px solid var(--line); margin-bottom:16px;">
+      <span class="wk-num" style="background:var(--amber-soft); color:var(--amber-deep);">EXTRA</span>
+      <span class="wk-title">Premios e incentivos del proyecto</span>
+    </div>
+
+    <div class="incentive-card">
+      <h3>Puntos extra por materia</h3>
+      <p class="incentive-note">Provisional — sujeto a confirmación de cada docente.</p>
+      <table class="incentive-table">
+        <thead>
+          <tr><th>Docente</th><th>Materia</th><th>Bono</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>José Pablo</td><td>Cívica y Estudios Sociales</td><td>3%</td></tr>
+          <tr><td>Carlos</td><td>Cívica y Estudios Sociales</td><td>3%</td></tr>
+          <tr><td>Cindy Sánchez</td><td>Inglés</td><td>3%</td></tr>
+          <tr><td>Fernando</td><td>Química, Biología y Física</td><td>3%</td></tr>
+        </tbody>
+      </table>
+      <p class="incentive-condition">Este bono lo otorga cada docente únicamente a los estudiantes que, el día del evento, obtengan una nota superior a 95 en la evaluación del proyecto.</p>
+    </div>
+
+    <div class="incentive-card">
+      <h3>Premios por categoría</h3>
+      <ul class="incentive-list">
+        <li>Mejor proyecto por eje temático (Impresión 3D, Cortadora Láser, Construcción, Electrónica y Programación)</li>
+        <li>Mejor proyecto general de la feria</li>
+      </ul>
+      <p class="incentive-pending">Los premios específicos de cada categoría se anunciarán próximamente.</p>
+    </div>
+  </section>
 
 </div>
 
@@ -314,7 +388,13 @@ const weeks = [
       "Lluvia de ideas en <a href=\"https://miro.com\" target=\"_blank\" rel=\"noopener\">Miro</a> (cada equipo inicia sesión y crea su propio tablero): cada integrante propone 2 ideas de negocio dentro de un eje (Impresión 3D, Cortadora Láser, Construcción o Electrónica y Programación); el equipo elige un enfoque concreto (ej. mascotas, hogar, deporte), fija su eje definitivo y asigna roles: Diseño/Fabricación, Producto, Desarrollo Web, Marca, Vocero Comercial.",
       "Naming: generación de 5 opciones de nombre de empresa, votación interna y 2 bocetos a mano de logo para elegir uno. Registro en el Modelo de Negocio (Slides): diapositiva 1 con el nombre elegido y diapositiva 2 con el cliente objetivo (edad, intereses, necesidad)."
     ],
-    deliverable: "Slides con diapositivas 1-2 completas (Nombre del Producto + Cliente Objetivo)."
+    deliverables: [
+      "Enlace del tablero de Miro con la lluvia de ideas, el enfoque elegido y los roles del equipo.",
+      "Evidencia del naming: las 5 opciones de nombre propuestas y cuál ganó la votación (captura o nota escrita).",
+      "Boceto del logo (foto o captura de las 2 propuestas hechas a mano).",
+      "Slides — diapositiva 1 completa: Nombre del Producto.",
+      "Slides — diapositiva 2 completa: Cliente Objetivo."
+    ]
   },
   {
     n: 2, title: "Boceto e inicio del diseño digital",
@@ -323,7 +403,11 @@ const weeks = [
       "Boceto a mano de los 5 productos del catálogo, con vista frontal y medidas aproximadas en centímetros; votación interna de los 5 bocetos definitivos y ajustes según las observaciones del equipo.",
       "Modelado del primer producto en Tinkercad u Onshape, o vectorizado en Falcon Design (según el eje), replicando las medidas del boceto; carga de la captura y el enlace del diseño en la diapositiva 'Boceto a mano' del Canva de documentación técnica."
     ],
-    deliverable: "Slides con diapositiva 3 (Propuesta de Valor) + Canva de documentación técnica con captura y enlace de los 5 bocetos."
+    deliverables: [
+      "Foto de los 5 bocetos a mano (con medidas visibles).",
+      "Canva de documentación técnica actualizado: captura de pantalla + enlace del diseño digital del primer producto.",
+      "Slides — diapositiva 3 completa: Propuesta de Valor."
+    ]
   },
   {
     n: 3, title: "Diseño digital e inicio de fabricación",
@@ -332,7 +416,13 @@ const weeks = [
       "Modelado de los productos 2 a 5 en la herramienta digital correspondiente al eje; revisión cruzada entre equipos del mismo eje, anotando un ajuste concreto a corregir.",
       "Inicio de fabricación del primer producto: impresión 3D, corte en la cortadora láser, armado con materiales/Knex, o montaje del primer circuito en protoboard, según el eje. Captura y enlace del diseño digital final cargados en la diapositiva 'Diseño 3D / Circuito' del Canva de documentación técnica."
     ],
-    deliverable: "Slides con diapositiva 4 (Características Clave) + Canva de documentación técnica con captura y enlace del diseño digital."
+    deliverables: [
+      "Captura del diseño digital de los 5 productos ya terminado.",
+      "Nota escrita con el ajuste sugerido por el equipo que te hizo la revisión cruzada.",
+      "Canva de documentación técnica actualizado: captura de pantalla + enlace del diseño digital final.",
+      "Foto del inicio de fabricación del primer producto.",
+      "Slides — diapositiva 4 completa: Características Clave."
+    ]
   },
   {
     n: 4, title: "Fabricación y programación",
@@ -341,7 +431,12 @@ const weeks = [
       "Fabricación de los productos 2 a 5 del catálogo.",
       "Programación del circuito con apoyo de un prompt de IA que genere el código base (eje de Electrónica), o acabado y pulido de piezas (Impresión 3D, Cortadora Láser, Construcción); primera prueba de funcionamiento de los 5 productos, con registro escrito de qué falta ajustar."
     ],
-    deliverable: "Slides con diapositiva 9 (Análisis de Competencia)."
+    deliverables: [
+      "Fotos de fabricación de los productos 2 a 5.",
+      "Código comentado (eje de Electrónica) o evidencia de acabado de piezas (otros ejes).",
+      "Registro escrito de la primera prueba de funcionamiento (qué funciona y qué falta ajustar).",
+      "Slides — diapositiva 9 completa: Análisis de Competencia."
+    ]
   },
   {
     n: 5, title: "Continuación de fabricación",
@@ -350,7 +445,12 @@ const weeks = [
       "Corrección de piezas o circuitos que fallaron en la prueba anterior; ajuste fino de programación (tiempos, sensores) o de ensamblaje, según el eje.",
       "Segunda prueba de funcionamiento de los 5 productos, con un compañero externo al equipo probando cada uno; foto y enlace del avance físico cargados en la diapositiva 'Físico / Fabricado' del Canva de documentación técnica."
     ],
-    deliverable: "Slides con diapositiva 8 (Costo de Producción) + Canva de documentación técnica con foto y enlace del avance físico."
+    deliverables: [
+      "Evidencia de las correcciones realizadas (foto o descripción breve).",
+      "Registro escrito de la segunda prueba de funcionamiento.",
+      "Canva de documentación técnica actualizado: foto + enlace del avance físico.",
+      "Slides — diapositiva 8 completa: Costo de Producción."
+    ]
   },
   {
     n: 6, title: "Ensamblaje y pruebas",
@@ -359,7 +459,11 @@ const weeks = [
       "Ensamblaje final de los 5 productos con acabados: pintura, pulido o empaque simple; prueba de funcionamiento final y ajustes de último momento.",
       "Control de calidad: revisión uno por uno de los 5 productos contra 3 criterios (funciona, se ve terminado, es seguro de manipular); sesión de fotos de los productos terminados para el sitio web y el Canva de documentación técnica."
     ],
-    deliverable: "Slides con diapositiva 7 (Precio del Producto)."
+    deliverables: [
+      "Fotos de los 5 productos terminados (fondo neutro, buena luz).",
+      "Lista de verificación de control de calidad de los 5 productos (funciona / se ve terminado / es seguro).",
+      "Slides — diapositiva 7 completa: Precio del Producto."
+    ]
   },
   {
     n: 7, title: "Identidad de marca e inicio del sitio web",
@@ -368,7 +472,14 @@ const weeks = [
       "Definición del logo final (una sola versión), la paleta de colores de marca (2 a 3 colores) y 3 opciones de eslogan hasta elegir la versión final.",
       "Creación del archivo HTML del sitio con 4 secciones (inicio, sobre la empresa, catálogo, contacto) y aplicación de los estilos CSS con los colores y tipografía de marca."
     ],
-    deliverable: "Slides con diapositivas 5 y 10 (Estrategia de Promoción + Eslogan)."
+    deliverables: [
+      "Logo final (archivo de imagen).",
+      "Paleta de colores de marca (2 a 3 colores, con código de color).",
+      "Las 3 opciones de eslogan consideradas y cuál quedó como definitiva.",
+      "Captura del archivo HTML con las 4 secciones y los estilos CSS aplicados.",
+      "Slides — diapositiva 5 completa: Estrategia de Promoción.",
+      "Slides — diapositiva 10 completa: Eslogan."
+    ]
   },
   {
     n: 8, title: "Finalización del sitio web",
@@ -377,7 +488,12 @@ const weeks = [
       "Carga de las 5 fichas de producto al sitio (foto, nombre, descripción y precio de cada uno) y programación en JS de un elemento interactivo (menú, galería o formulario de contacto).",
       "Revisión del sitio desde computadora y celular, corrigiendo lo que no funcione; publicación (GitHub Pages, Netlify u otro) y prueba del enlace final."
     ],
-    deliverable: "Slides con diapositiva 6 (Canal de Venta) + enlace del sitio web publicado."
+    deliverables: [
+      "Captura del sitio mostrando las 5 fichas de producto cargadas.",
+      "Captura o video corto del elemento interactivo en JS funcionando.",
+      "Enlace del sitio web ya publicado (funcionando, con acceso).",
+      "Slides — diapositiva 6 completa: Canal de Venta."
+    ]
   },
   {
     n: 9, title: "Pitch comercial y diseño del stand",
@@ -386,7 +502,12 @@ const weeks = [
       "Redacción del guion del pitch: apertura, problema que resuelve el catálogo, presentación de los 5 productos y cierre con llamado a la acción; primer ensayo cronometrado (máximo 3 minutos) con retroalimentación del equipo.",
       "Boceto del stand: ubicación de los 5 productos, del logo y de los materiales de decoración; revisión final de las 11 diapositivas del Modelo de Negocio, verificando que ninguna quede incompleta."
     ],
-    deliverable: "Slides con diapositiva 11 (Próximos Pasos) + Modelo de Negocio completo (11 diapositivas)."
+    deliverables: [
+      "Guion escrito del pitch comercial (documento).",
+      "Boceto del stand (foto o captura).",
+      "Slides — diapositiva 11 completa: Próximos Pasos.",
+      "Enlace del Modelo de Negocio con las 11 diapositivas completas y revisadas."
+    ]
   },
   {
     n: 10, title: "Feria ROBOTEC",
@@ -395,7 +516,10 @@ const weeks = [
       "Montaje físico del stand con la decoración y los 5 productos colocados; ensayo final del pitch comercial completo, ya en el espacio real del stand.",
       "Presentación en vivo del pitch comercial ante el comité evaluador, con los 5 productos disponibles para mostrar; premiación al mejor proyecto por eje y al mejor proyecto general."
     ],
-    deliverable: "Presentación en vivo, evaluada con las rúbricas de Producto Técnico, Marca/Sitio Web y Pitch Comercial."
+    deliverables: [
+      "Foto del stand ya montado.",
+      "Presentación en vivo ante el comité evaluador (se evalúa directamente el día del evento, no se sube a Classroom)."
+    ]
   }
 ];
 
@@ -453,8 +577,12 @@ weeks.forEach((week) => {
     week.lessons.forEach((l, i) => {
       html += `<p class="lesson"><span class="lesson-label">Lección ${i+1}:</span>${l}</p>`;
     });
-    if (week.deliverable) {
-      html += `<div class="deliverable"><span class="d-label">Entrega en Classroom</span>${week.deliverable}</div>`;
+    if (week.deliverables && week.deliverables.length) {
+      const items = week.deliverables.map((d) => `<li>${d}</li>`).join("");
+      html += `<div class="deliverable"><span class="d-label">Entrega en Classroom — sube TODO lo siguiente</span><ul class="deliverable-list">${items}</ul></div>`;
+    }
+    if (week.async) {
+      html += `<div class="async-block"><span class="a-label">Trabajo asincrónico</span>${week.async}</div>`;
     }
     html += `<div class="click-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>Ver detalle completo</div>`;
     card.innerHTML = html;
@@ -658,11 +786,15 @@ function openModal(sessionId){
   timerState.totalLessons = s.lessons.length;
   resetTimer();
 
-  if (s.deliverable) {
-    modalDeliverableSlot.innerHTML = `<div class="modal-deliverable"><span class="d-label">Entrega en Classroom</span>${s.deliverable}</div>`;
-  } else {
-    modalDeliverableSlot.innerHTML = "";
+  let deliverableHtml = "";
+  if (s.deliverables && s.deliverables.length) {
+    const items = s.deliverables.map((d) => `<li>${d}</li>`).join("");
+    deliverableHtml += `<div class="modal-deliverable"><span class="d-label">Entrega en Classroom — sube TODO lo siguiente</span><ul class="deliverable-list">${items}</ul></div>`;
   }
+  if (s.async) {
+    deliverableHtml += `<div class="modal-async"><span class="a-label">Trabajo asincrónico</span>${s.async}</div>`;
+  }
+  modalDeliverableSlot.innerHTML = deliverableHtml;
 
   const link = getModelLink();
   if (link) {
